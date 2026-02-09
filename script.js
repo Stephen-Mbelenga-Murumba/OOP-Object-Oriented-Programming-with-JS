@@ -4,12 +4,12 @@
 
 //// Constructor function & the new operator.
 
-/* const Person = function (firstName, birthYear) {
+const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
 };
-const steve = new Person('Stephen', 1991);
-console.log(steve);
+const steveM = new Person('Stephen', 1991);
+console.log(steveM);
 
 //// Notes
 //// 1. New {} is created
@@ -21,7 +21,7 @@ const matilda = new Person('Matilda', 2017);
 const jack = new Person('Jack', 1975);
 
 console.log(matilda, jack);
-console.log(steve instanceof Person);
+console.log(steveM instanceof Person);
 
 ////// Prototypes
 console.log(Person.prototype);
@@ -29,12 +29,17 @@ console.log(Person.prototype);
 Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear);
 };
+Person.hey = function () {
+  console.log(`Hey there 👋.`);
+};
+Person.hey();
+// jack.hey();
 
-steve.calcAge();
+steveM.calcAge();
 matilda.calcAge();
 jack.calcAge();
 
-// console.log(steve.__proto__);
+/* // console.log(steve.__proto__);
 console.log(steve.__proto__ === Person.prototype); // true
 
 console.log(Person.prototype.isPrototypeOf(steve)); // true
@@ -115,10 +120,11 @@ mercedes.accelerate(); */
 //// ES6 Classes
 
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
+  //// Instance methods.
   //// Methods will be added to .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -126,15 +132,54 @@ class PersonCl {
   greet() {
     console.log(`Hello ${this.firstName}`);
   }
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  //// Set a property that already exist, use underscore(_)
+  set fullName(name) {
+    // console.log(name);
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+  get fullName() {
+    return this._fullName;
+  }
+  //// Static Method
+  static hey() {
+    return `Hey there 👋`;
+  }
 }
 
-const steve = new PersonCl('Stephen', 1991);
-console.log(steve);
-steve.calcAge();
+const steve = new PersonCl('Stephen Mbelenga', 1991);
+// console.log(steve);
+// steve.calcAge();
+console.log(steve.age);
+const jessica = new PersonCl('Jessica Davis', 2015);
+// console.log(jessica.fullName);
+console.log(PersonCl.hey());
+// console.log(jessica.hey()); //// TypeError: Not a function
 
-console.log(steve.__proto__ === PersonCl.prototype); // true
+// console.log(steve.__proto__ === PersonCl.prototype); // true
 
-// PersonCl.prototype.greet = function () {
-//   console.log(`Hello ${this.firstName}`);
-// };
-steve.greet();
+// // PersonCl.prototype.greet = function () {
+// //   console.log(`Hello ${this.firstName}`);
+// // };
+// steve.greet(); // Hello Stephen
+
+//// Setters and Getters
+
+const account = {
+  owner: 'Stephen',
+  movements: [200, 530, 120, 300],
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+console.log(account.latest);
+account.latest = 50;
+console.log(account.movements);
+
+//// Static Methods
