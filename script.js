@@ -484,12 +484,15 @@ class Account {
   // Public interface
   getMovements() {
     return this.#movements;
+    // Not chainable
   }
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
   withdraw(val) {
     this.deposit(-val);
+    return this;
   }
   // Private Method
   #approveLoan(val) {
@@ -499,17 +502,30 @@ class Account {
   requestLoan(val) {
     this.#approveLoan(val) && this.deposit(val);
     console.log('Loan Approved ☺️');
+    return this;
   }
   // static method
-  static #test() {
-    console.log('TEST');
-  }
+  // static #test() {
+  //   console.log('TEST');
+  // }
 }
 
 const acc1 = new Account('Stephen', 'KSH', 1111);
 acc1.deposit(300);
 acc1.withdraw(150);
-console.log(acc1.getMovements());
+// console.log(acc1.getMovements());
+
 // console.log(acc1.movements); ////Undefined
 // console.log(acc1.#approveLoan); // SyntaxError
 // Account.#test(); // SyntaxError
+
+//// Chaining Methods
+
+const movements = acc1
+  .deposit(400)
+  .withdraw(300)
+  .withdraw(50)
+  .requestLoan(2500)
+  .withdraw(400)
+  .getMovements();
+console.log(movements);
