@@ -2,7 +2,7 @@
 
 //////////////////LECTURE///////////
 
-//// Constructor function & the new operator.
+/* //// Constructor function & the new operator.
 
 const Person = function (firstName, birthYear) {
   this.firstName = firstName;
@@ -39,7 +39,7 @@ steveM.calcAge();
 matilda.calcAge();
 jack.calcAge();
 
-/* // console.log(steve.__proto__);
+// console.log(steve.__proto__);
 console.log(steve.__proto__ === Person.prototype); // true
 
 console.log(Person.prototype.isPrototypeOf(steve)); // true
@@ -73,7 +73,7 @@ Array.prototype.unique = function () {
 console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
-const func = x => x + 1; */
+const func = x => x + 1; 
 
 // Coding Challenge #1
 
@@ -119,7 +119,7 @@ mercedes.accelerate(); */
 
 //// ES6 Classes
 
-class PersonCl {
+/* class PersonCl {
   constructor(fullName, birthYear) {
     this.fullName = fullName;
     this.birthYear = birthYear;
@@ -164,7 +164,7 @@ console.log(PersonCl.hey());
 // // PersonCl.prototype.greet = function () {
 // //   console.log(`Hello ${this.firstName}`);
 // // };
-// steve.greet(); // Hello Stephen
+// steve.greet(); // Hello Stephen */
 
 //// Setters and Getters
 
@@ -178,8 +178,76 @@ const account = {
     this.movements.push(mov);
   },
 };
-console.log(account.latest);
+console.log(account.latest); // 300
 account.latest = 50;
-console.log(account.movements);
+console.log(account.movements); // [200, 530, 120, 300, 50]*/
 
 //// Static Methods
+//// Use static keyword to create static methods.
+
+//// OBJECT.CREATE
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'Stephen';
+steven.birthYear = 2002;
+steven.calcAge();
+console.log(steven.__proto__ === PersonProto); // true
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge();
+
+/*
+Your tasks:
+1. Re-create Challenge #1, but this time using an ES6 class (call it 'CarCl')
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6)
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but 
+converts it to km/h before storing the value, by multiplying the input by 1.6)
+4. Create a new car and experiment with the 'accelerate' and 'brake'
+methods, and with the getter and setter.
+Test data:
+  Data car 1: 'Ford' going at 120 km/h
+GOOD LUCK ☺️
+ */
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} going at ${this.speed} km/h`);
+  }
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} going at ${this.speed} km/h`);
+  }
+  set speedUS(speed) {
+    this._speed = speed * 1.6;
+  }
+  get speedUS() {
+    return `${this.make} going at ${this.speed / 1.6} ml/h`;
+  }
+}
+
+const ford = new CarCl('Ford', 120);
+// ford.accelerate();
+// ford.brake();
+// ford.brake();
+// console.log(ford.speedUS);
+// ford.speedUS = 50;
+// console.log(ford); // _speed : 80
+
+//// INHERITANCE BETWEEN "CLASSES": CONSTRUCTOR FUNCTIONS
