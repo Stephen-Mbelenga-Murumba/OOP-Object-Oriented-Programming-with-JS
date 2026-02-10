@@ -421,34 +421,95 @@ GOOD LUCK☺️
 // jay.calcAge();
 
 //// Example Classes
+// class Account {
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.pin = pin;
+//     this.movements = [];
+//     this.locale = navigator.language;
+
+//     console.log(`Thanks for opening an account with us, ${this.owner}`);
+//   }
+//   // Public interface
+//   deposit(val) {
+//     this.movements.push(val);
+//   }
+//   withdrawals(val) {
+//     this.deposit(-val);
+//   }
+//   approveLoan(val) {
+//     return true;
+//   }
+//   requestLoan(val) {
+//     this.approveLoan(val) && this.deposit(val);
+//     console.log('Loan Approved ☺️');
+//   }
+// }
+
+// const acc1 = new Account('Stephen', 'KSH', 1111);
+// console.log(acc1);
+// acc1.deposit(250);
+// acc1.withdrawals(140);
+// console.log(acc1.pin);
+// acc1.requestLoan(50);
+// acc1.approveLoan(50);
+
+//// ENCAPSULATION: Private Class Fields and Methods
+
+// 1. Public fields
+// 1. Private fields
+// 1. Public methods
+// 1. Public methods
+// STATIC version of these 4
+
 class Account {
+  // Public fields
+  locale = navigator.language;
+  bank = 'Bankist';
+
+  // private fields
+  #movements = [];
+  #pin;
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
-    this.locale = navigator.language;
+    this.#pin = pin;
+    // this.locale = navigator.language;
+
+    console.log(
+      `Thanks for opening an account with ${this.bank}, ${this.owner}`,
+    );
   }
   // Public interface
-  deposit(val) {
-    this.movements.push(val);
+  getMovements() {
+    return this.#movements;
   }
-  withdrawals(val) {
+  deposit(val) {
+    this.#movements.push(val);
+  }
+  withdraw(val) {
     this.deposit(-val);
   }
-  approveLoan(val) {
+  // Private Method
+  #approveLoan(val) {
+    // Fake method
     return true;
   }
   requestLoan(val) {
-    this.approveLoan(val) && this.deposit(val);
+    this.#approveLoan(val) && this.deposit(val);
     console.log('Loan Approved ☺️');
+  }
+  // static method
+  static #test() {
+    console.log('TEST');
   }
 }
 
 const acc1 = new Account('Stephen', 'KSH', 1111);
-console.log(acc1);
-acc1.deposit(250);
-acc1.withdrawals(140);
-console.log(acc1.pin);
-acc1.requestLoan(50);
-acc1.approveLoan(50);
+acc1.deposit(300);
+acc1.withdraw(150);
+console.log(acc1.getMovements());
+// console.log(acc1.movements); ////Undefined
+// console.log(acc1.#approveLoan); // SyntaxError
+// Account.#test(); // SyntaxError
