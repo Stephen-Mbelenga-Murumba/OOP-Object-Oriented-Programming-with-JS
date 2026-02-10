@@ -343,54 +343,79 @@ GOOD LUCK☺️
 
 //////// INHERITANCE BETWEEN 'CLASSES': ES6 Classes
 
-class PersonCl {
-  constructor(fullName, birthYear) {
-    this.fullName = fullName;
-    this.birthYear = birthYear;
-  }
-  //// Instance methods.
-  //// Methods will be added to .prototype property
-  calcAge() {
-    console.log(2037 - this.birthYear);
-  }
-  greet() {
-    console.log(`Hello ${this.firstName}`);
-  }
-  get age() {
-    return 2037 - this.birthYear;
-  }
-  //// Set a property that already exist, use underscore(_)
-  set fullName(name) {
-    // console.log(name);
-    if (name.includes(' ')) this._fullName = name;
-    else alert(`${name} is not a full name!`);
-  }
-  get fullName() {
-    return this._fullName;
-  }
-  //// Static Method
-  static hey() {
-    return `Hey there 👋`;
-  }
-}
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+//   //// Instance methods.
+//   //// Methods will be added to .prototype property
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+//   greet() {
+//     console.log(`Hello ${this.firstName}`);
+//   }
+//   get age() {
+//     return 2037 - this.birthYear;
+//   }
+//   //// Set a property that already exist, use underscore(_)
+//   set fullName(name) {
+//     // console.log(name);
+//     if (name.includes(' ')) this._fullName = name;
+//     else alert(`${name} is not a full name!`);
+//   }
+//   get fullName() {
+//     return this._fullName;
+//   }
+//   //// Static Method
+//   static hey() {
+//     return `Hey there 👋`;
+//   }
+// }
 
-class StudentCl extends PersonCl {
-  constructor(fullName, birthYear, course) {
-    // Always need to be declared first
-    super(fullName, birthYear);
-    this.course = course;
-  }
-  introduce() {
-    console.log(`My name is ${this.fullName} and I study ${this.course}.`);
-  }
-  calcAge() {
-    console.log(`I am ${2037 - this.birthYear} years old.`);
-  }
-}
+// class StudentCl extends PersonCl {
+//   constructor(fullName, birthYear, course) {
+//     // Always need to be declared first
+//     super(fullName, birthYear);
+//     this.course = course;
+//   }
+//   introduce() {
+//     console.log(`My name is ${this.fullName} and I study ${this.course}.`);
+//   }
+//   calcAge() {
+//     console.log(`I am ${2037 - this.birthYear} years old.`);
+//   }
+// }
 
-const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
-console.log(martha);
-martha.introduce();
-martha.calcAge();
+// const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+// console.log(martha);
+// martha.introduce();
+// martha.calcAge();
 
 //////// INHERITANCE BETWEEN 'CLASSES': OBJECT.CREATE
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}.`);
+};
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2010, 'Computer Science');
+jay.introduce();
+jay.calcAge();
