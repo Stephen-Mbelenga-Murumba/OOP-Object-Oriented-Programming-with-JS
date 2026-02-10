@@ -521,11 +521,80 @@ acc1.withdraw(150);
 
 //// Chaining Methods
 
-const movements = acc1
-  .deposit(400)
-  .withdraw(300)
-  .withdraw(50)
-  .requestLoan(2500)
-  .withdraw(400)
-  .getMovements();
-console.log(movements);
+// const movements = acc1
+//   .deposit(400)
+//   .withdraw(300)
+//   .withdraw(50)
+//   .requestLoan(2500)
+//   .withdraw(400)
+//   .getMovements();
+// console.log(movements);
+
+/* 
+Coding Challenge #4
+Your tasks:
+1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl'
+child class of the 'CarCl' class 
+2. Make the 'charge' property private
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery'
+methods of this class, and also update the 'brake' method in the 'CarCl'
+class. Then experiment with chaining!
+Test data:
+  Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
+GOOD LUCK☺️
+*/
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} going at ${this.speed} km/h`);
+    // return this;
+  }
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} going at ${this.speed} km/h`);
+    return this;
+  }
+  set speedUS(speed) {
+    this._speed = speed * 1.6;
+  }
+  get speedUS() {
+    return `${this.make} going at ${this.speed / 1.6} ml/h`;
+  }
+}
+
+class EVCl extends CarCl {
+  #charge;
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h, with a charge of ${this.#charge}%`,
+    );
+    return this;
+  }
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this.#charge;
+  }
+}
+
+const toyota = new EVCl('Toyota', 120, 23);
+const t1 = toyota
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .brake()
+  .chargeBattery(90);
+console.log(t1);
+console.log(toyota.speedUS);
+// const t2 = toyota.accelerate().brake();
+// console.log(t2);
