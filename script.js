@@ -209,6 +209,7 @@ console.log(PersonCl.hey());
 // sarah.calcAge();
 
 /*
+Coding Challenge #2
 Your tasks:
 1. Re-create Challenge #1, but this time using an ES6 class (call it 'CarCl')
 2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6)
@@ -458,9 +459,9 @@ GOOD LUCK☺️
 //// ENCAPSULATION: Private Class Fields and Methods
 
 // 1. Public fields
-// 1. Private fields
-// 1. Public methods
-// 1. Public methods
+// 2. Private fields
+// 3. Public methods
+// 4. Private methods
 // STATIC version of these 4
 
 class Account {
